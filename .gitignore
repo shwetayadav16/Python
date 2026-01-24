@@ -1,0 +1,5 @@
+*.csv
+*.zip
+*.mp4
+__pycache__/
+.vscode/
