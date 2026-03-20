@@ -1,74 +1,111 @@
-<!DOCTYPE html> <!-- HTML5 document type declaration -->
-<html lang="en"> <!-- Root element with language set to English -->
-<head> <!-- Head section containing metadata -->
-    <meta charset="UTF-8"> <!-- Character encoding set to UTF-8 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive design for mobile devices -->
-    <title>Responsive Login Form</title> <!-- Page title in browser tab -->
-    <style> 
-    /* Internal CSS styles */
-        /* Body styles: sets font, light grey background, centers content */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Login Form</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --primary-hover: #45a049;
+            --border-color: #ccc;
+            --error-color: red;
+            --text-dark: #333;
+            --bg-light: #f4f4f4;
+            --padding-small: 5px;
+            --padding-base: 10px;
+            --padding-container: 20px;
+            --border-radius: 4px;
+            --shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: var(--bg-light);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
-        /* Login container: white card with padding, rounded corners, shadow */
+
         .login-container {
             background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: var(--padding-container);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
             width: 100%;
             max-width: 400px;
         }
-        /* Login form: flex column layout */
+
         .login-form {
             display: flex;
             flex-direction: column;
         }
-        /* Form group: spacing between fields */
+
         .form-group {
             margin-bottom: 15px;
         }
-        /* Label styles: block display with margin */
+
         label {
-            margin-bottom: 5px;
+            margin-bottom: var(--padding-small);
             display: block;
         }
-        /* Input styles for text and password: full width, padding, border */
+
         input[type="text"],
         input[type="password"] {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            padding: var(--padding-base);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
             box-sizing: border-box;
         }
-        /* Button styles: green background, white text, padding, no border */
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 70px;
+        }
+
         button {
-            background-color: #4CAF50;
+            background-color: var(--primary-color);
             color: white;
-            padding: 10px;
+            padding: var(--padding-base);
             border: none;
-            border-radius: 4px;
+            border-radius: var(--border-radius);
             cursor: pointer;
             font-size: 16px;
         }
-        /* Button hover: darker green */
+
         button:hover {
-            background-color: #45a049;
+            background-color: var(--primary-hover);
         }
-        /* Error message styles: red text, small font, top margin */
-        .error {
-            color: red;
+
+        .toggle-password {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 0;
             font-size: 14px;
-            margin-top: 5px;
         }
-        /* Media query for small screens: reduce padding */
+
+        .toggle-password:hover {
+            background-color: transparent;
+        }
+
+        .error {
+            color: var(--error-color);
+            font-size: 14px;
+            margin-top: var(--padding-small);
+        }
+
         @media (max-width: 480px) {
             .login-container {
                 padding: 15px;
@@ -76,78 +113,91 @@
         }
     </style>
 </head>
-<body> <!-- Main body of the document -->
-    <!-- contribution test -->
+<body>
 
-    <div class="login-container"> <!-- Main container for the login form -->
-        <h2>Login</h2> <!-- Form title -->
-        <form class="login-form" id="loginForm"> <!-- Login form with class and id for styling and JavaScript -->
-            <div class="form-group"> <!-- Form group for username -->
-
-                <label for="username">Username:</label> <!-- Label for username input -->
-
-                <input type="text" id="username" name="username"> <!-- Text input for username -->
-
-                <div class="error" id="usernameError"></div> <!-- Placeholder for username error messages -->
-
+    <div class="login-container">
+        <h2>Login</h2>
+        <form class="login-form" id="loginForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username">
+                <div class="error" id="usernameError"></div>
             </div>
-            <div class="form-group"> <!-- Form group for password -->
-                <label for="password">Password:</label> <!-- Label for password input -->
-                <div style="position: relative;"> <!-- Relative positioned container for toggle button -->
-                    <input type="password" id="password" name="password" style="padding-right: 70px;"> <!-- Password input with extra padding for button -->
-                    <button type="button" id="togglePassword" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #333; cursor: pointer; padding: 0; font-size: 14px;">Show</button> <!-- Button to toggle password visibility -->
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password">
+                    <button type="button" class="toggle-password" id="togglePassword">Show</button>
                 </div>
-                <div class="error" id="passwordError"></div> <!-- Placeholder for password error messages -->
+                <div class="error" id="passwordError"></div>
             </div>
-            <button type="submit">Login</button> <!-- Submit button for the form -->
+            <button type="submit">Login</button>
         </form>
     </div>
 
-    <script> <!-- JavaScript for form validation and password toggle -->
-        // Add event listener for form submission
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-            let isValid = true; // Flag to track if form is valid
+    <script>
+        const formElements = {
+            form: document.getElementById('loginForm'),
+            username: document.getElementById('username'),
+            password: document.getElementById('password'),
+            toggleBtn: document.getElementById('togglePassword'),
+            usernameError: document.getElementById('usernameError'),
+            passwordError: document.getElementById('passwordError')
+        };
 
-            // Clear previous errors
-            document.getElementById('usernameError').textContent = '';
-            document.getElementById('passwordError').textContent = '';
+        const errors = {
+            usernameRequired: 'Username is required.',
+            passwordRequired: 'Password is required.',
+            passwordLength: 'Password must be at least 6 characters long.'
+        };
 
-            // Validate username
-            const username = document.getElementById('username').value.trim();
+        function setError(field, message) {
+            field.textContent = message;
+        }
+
+        function clearErrors() {
+            setError(formElements.usernameError, '');
+            setError(formElements.passwordError, '');
+        }
+
+        function validateForm() {
+            clearErrors();
+            let isValid = true;
+
+            const username = formElements.username.value.trim();
             if (username === '') {
-                document.getElementById('usernameError').textContent = 'Username is required.';
+                setError(formElements.usernameError, errors.usernameRequired);
                 isValid = false;
             }
 
-            // Validate password
-            const password = document.getElementById('password').value;
+            const password = formElements.password.value;
             if (password === '') {
-                document.getElementById('passwordError').textContent = 'Password is required.';
+                setError(formElements.passwordError, errors.passwordRequired);
                 isValid = false;
             } else if (password.length < 6) {
-                document.getElementById('passwordError').textContent = 'Password must be at least 6 characters long.';
+                setError(formElements.passwordError, errors.passwordLength);
                 isValid = false;
             }
 
-            if (isValid) { // If form is valid
+            return isValid;
+        }
+
+        function togglePasswordVisibility() {
+            const isHidden = formElements.password.type === 'password';
+            formElements.password.type = isHidden ? 'text' : 'password';
+            formElements.toggleBtn.textContent = isHidden ? 'Hide' : 'Show';
+        }
+
+        // Event listeners
+        formElements.form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (validateForm()) {
                 alert('Login successful!');
-                // Here you can add code to submit the form or redirect
+                // TODO: Add form submission or redirect logic here
             }
         });
 
-        // Add event listener for password toggle button
-        document.getElementById('togglePassword').addEventListener('click', function() {
-            const passwordInput = document.getElementById('password'); // Get password input element
-            const toggle = document.getElementById('togglePassword'); // Get toggle button element
-            if (passwordInput.type === 'password') { // If password is hidden
-                passwordInput.type = 'text'; // Show password
-                toggle.textContent = 'Hide'; // Change button text to Hide
-            } else { // If password is shown
-                passwordInput.type = 'password'; // Hide password
-                toggle.textContent = 'Show'; // Change button text to Show
-            }
-        });
+        formElements.toggleBtn.addEventListener('click', togglePasswordVisibility);
     </script>
 </body>
 </html>
