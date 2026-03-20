@@ -76,7 +76,10 @@
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password">
+                <div style="position: relative;">
+                    <input type="password" id="password" name="password" style="padding-right: 70px;">
+                    <button type="button" id="togglePassword" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #333; cursor: pointer; padding: 0; font-size: 14px;">Show</button>
+                </div>
                 <div class="error" id="passwordError"></div>
             </div>
             <button type="submit">Login</button>
@@ -112,6 +115,18 @@
             if (isValid) {
                 alert('Login successful!');
                 // Here you can add code to submit the form or redirect
+            }
+        });
+
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const toggle = document.getElementById('togglePassword');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggle.textContent = 'Hide';
+            } else {
+                passwordInput.type = 'password';
+                toggle.textContent = 'Show';
             }
         });
     </script>
