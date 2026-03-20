@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login System</title>
+    <style>
+        :root {
+            --bg: linear-gradient(135deg, #eef6ff 0%, #dff1e8 100%);
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --border: #d1d5db;
+            --accent: #0f766e;
+            --accent-dark: #115e59;
+            --danger: #b91c1c;
+            --success: #166534;
+            --shadow: 0 20px 45px rgba(15, 118, 110, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        .card {
+            width: min(100%, 420px);
+            background: var(--card);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            padding: 28px;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            margin: 0 0 24px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            color: var(--text);
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .tab-button.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .field-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: 2px solid rgba(15, 118, 110, 0.2);
+            border-color: var(--accent);
+        }
+
+        .hint {
+            margin-top: 6px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .actions {
+            display: grid;
+            gap: 12px;
+        }
+
+        button.primary {
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button.primary:hover {
+            background: var(--accent-dark);
+        }
+
+        .message {
+            min-height: 24px;
+            margin-top: 18px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .message.error {
+            color: var(--danger);
+        }
+
+        .message.success {
+            color: var(--success);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 22px;
+            }
+
+            h1 {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="card">
+        <h1>User Login</h1>
+        <p class="subtitle">Register a user in SQLite, then log in with validation.</p>
+
+        <div class="tabs">
+            <button class="tab-button active" id="showLoginBtn" type="button">Login</button>
+            <button class="tab-button" id="showRegisterBtn" type="button">Register</button>
+        </div>
+
+        <form id="authForm" novalidate>
+            <div class="field-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter username">
+                <div class="hint">Use at least 3 characters.</div>
+            </div>
+
+            <div class="field-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password">
+                <div class="hint">Use at least 6 characters.</div>
+            </div>
+
+            <div class="field-group hidden" id="confirmPasswordGroup">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password">
+            </div>
+
+            <div class="actions">
+                <button class="primary" type="submit" id="submitBtn">Login</button>
+            </div>
+        </form>
+
+        <p class="message" id="message"></p>
+    </section>
+
+    <script>
+        const API_BASE_URL = "http://127.0.0.1:8000";
+
+        const authForm = document.getElementById("authForm");
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+        const confirmPasswordInput = document.getElementById("confirmPassword");
+        const confirmPasswordGroup = document.getElementById("confirmPasswordGroup");
+        const submitBtn = document.getElementById("submitBtn");
+        const messageBox = document.getElementById("message");
+        const showLoginBtn = document.getElementById("showLoginBtn");
+        const showRegisterBtn = document.getElementById("showRegisterBtn");
+
+        let mode = "login";
+
+        function setMode(nextMode) {
+            mode = nextMode;
+            const isRegister = mode === "register";
+
+            confirmPasswordGroup.classList.toggle("hidden", !isRegister);
+            submitBtn.textContent = isRegister ? "Register" : "Login";
+            showLoginBtn.classList.toggle("active", !isRegister);
+            showRegisterBtn.classList.toggle("active", isRegister);
+            clearMessage();
+            authForm.reset();
+        }
+
+        function showMessage(text, type) {
+            messageBox.textContent = text;
+            messageBox.className = `message ${type}`;
+        }
+
+        function clearMessage() {
+            messageBox.textContent = "";
+            messageBox.className = "message";
+        }
+
+        function validateForm() {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            const confirmPassword = confirmPasswordInput.value.trim();
+
+            if (username.length < 3) {
+                showMessage("Username must be at least 3 characters long.", "error");
+                return null;
+            }
+
+            if (password.length < 6) {
+                showMessage("Password must be at least 6 characters long.", "error");
+                return null;
+            }
+
+            if (mode === "register" && password !== confirmPassword) {
+                showMessage("Passwords do not match.", "error");
+                return null;
+            }
+
+            return { username, password };
+        }
+
+        async function submitAuth(event) {
+            event.preventDefault();
+            clearMessage();
+
+            const formData = validateForm();
+            if (!formData) {
+                return;
+            }
+
+            const endpoint = mode === "register" ? "/register" : "/login";
+
+            try {
+                const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    showMessage(data.message || "Request failed.", "error");
+                    return;
+                }
+
+                showMessage(data.message, "success");
+                if (mode === "register") {
+                    setMode("login");
+                    usernameInput.value = formData.username;
+                }
+            } catch (error) {
+                showMessage("Server not reachable. Start the Python server first.", "error");
+            }
+        }
+
+        showLoginBtn.addEventListener("click", function () {
+            setMode("login");
+        });
+
+        showRegisterBtn.addEventListener("click", function () {
+            setMode("register");
+        });
+
+        authForm.addEventListener("submit", submitAuth);
+    </script>
+</body>
+</html>

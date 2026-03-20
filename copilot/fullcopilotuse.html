@@ -1,0 +1,152 @@
+<!-- HTML5 document declaration -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Character encoding for the document -->
+    <meta charset="UTF-8">
+    <!-- Viewport meta tag for responsive design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Page title -->
+    <title>Student Result Form</title>
+    <style>
+        /* Body styles for overall page layout */
+        body {
+            font-family: Arial, sans-serif; /* Font family for the entire page */
+            background-color: #f0f0f0; /* Light gray background */
+            margin: 0; /* Remove default margins */
+            padding: 20px; /* Padding around the page content */
+            display: flex; /* Use flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            min-height: 100vh; /* Full viewport height */
+        }
+
+        /* Card container styles */
+        .card {
+            background-color: white; /* White background for the card */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            padding: 20px; /* Internal padding */
+            max-width: 400px; /* Maximum width */
+            width: 100%; /* Full width up to max-width */
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+
+        /* Heading styles */
+        h1 {
+            text-align: center; /* Center the title */
+            color: #333; /* Dark gray text color */
+            margin-bottom: 20px; /* Space below the title */
+        }
+
+        /* Form container styles */
+        form {
+            display: flex; /* Use flexbox for form layout */
+            flex-direction: column; /* Stack form elements vertically */
+        }
+
+        /* Label styles */
+        label {
+            margin-bottom: 5px; /* Space below labels */
+            font-weight: bold; /* Bold font weight */
+            color: #555; /* Medium gray text color */
+        }
+
+        /* Input field styles */
+        input {
+            padding: 10px; /* Internal padding for inputs */
+            margin-bottom: 15px; /* Space below inputs */
+            border: 1px solid #ddd; /* Light gray border */
+            border-radius: 4px; /* Rounded corners */
+            font-size: 16px; /* Font size for better mobile experience */
+        }
+
+        /* Button styles */
+        button {
+            padding: 10px; /* Internal padding */
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            border: none; /* Remove default border */
+            border-radius: 4px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            font-size: 16px; /* Font size */
+            transition: background-color 0.3s; /* Smooth color transition */
+        }
+
+        /* Button hover effect */
+        button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        /* Result display paragraph styles */
+        #resultDisplay {
+            margin-top: 20px; /* Space above the result */
+            padding: 10px; /* Internal padding */
+            background-color: #f9f9f9; /* Very light gray background */
+            border-radius: 4px; /* Rounded corners */
+            text-align: center; /* Center the text */
+            font-weight: bold; /* Bold font weight */
+            min-height: 20px; /* Minimum height to prevent layout shift */
+        }
+
+        /* Responsive styles for screens smaller than 480px */
+        @media (max-width: 480px) {
+            .card {
+                padding: 15px; /* Reduce padding on small screens */
+            }
+            h1 {
+                font-size: 24px; /* Smaller font size for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main card container -->
+    <div class="card">
+        <!-- Page title -->
+        <h1>Student Result Form</h1>
+        <!-- Form for student information input -->
+        <form id="resultForm">
+            <!-- Label and input for student name -->
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+
+            <!-- Label and input for student marks -->
+            <label for="marks">Marks:</label>
+            <input type="number" id="marks" min="0" max="100" required>
+
+            <!-- Submit button to process the form -->
+            <button type="button" id="submitBtn">Submit</button>
+        </form>
+
+        <!-- Paragraph to display the result -->
+        <p id="resultDisplay"></p>
+    </div>
+
+    <script>
+        // Add event listener to the submit button
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            // Get the values from the input fields
+            const name = document.getElementById('name').value;
+            const marks = document.getElementById('marks').value;
+
+            // Check if both name and marks are provided
+            if (name && marks) {
+                // Create the result message with name and marks
+                let result = `${name} scored ${marks} marks. `;
+                // Determine pass/fail based on marks (50+ is pass)
+                if (marks >= 50) {
+                    result += "Pass!";
+                } else {
+                    result += "Fail!";
+                }
+                // Display the result in the result paragraph
+                document.getElementById('resultDisplay').textContent = result;
+            } else {
+                // Display error message if fields are empty
+                document.getElementById('resultDisplay').textContent = "Please fill in all fields.";
+            }
+        });
+    </script>
+</body>
+</html>

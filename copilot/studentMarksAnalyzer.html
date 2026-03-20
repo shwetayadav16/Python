@@ -1,0 +1,41 @@
+<!-- Goal:
+Create a page that:
+
+Takes student name
+
+Takes marks
+
+Shows Pass / Fail -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Marks Checker</title>
+</head>
+<body>
+<!-- input field for student name
+  -->
+<input type="text" id="studentName" placeholder="Enter student name">
+<br><br>
+
+<!-- input field for marks
+  -->
+<input type="number" id="marks" placeholder="Enter marks">
+<br><br>
+
+<!-- button to check result
+  -->
+<button onclick="checkResult()">Check Result</button>
+
+<h2>Student Result</h2>
+<p id="result"></p>
+
+<script>
+function checkResult() {
+  const marks = Number(document.getElementById("marks").value);
+  const result = marks >= 40 ? "Pass" : "Fail";
+  document.getElementById("result").textContent = result;
+}
+</script>
+
+</body>
+</html>

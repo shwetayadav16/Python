@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseBoard Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div>
+        <p class="eyebrow">PulseBoard</p>
+        <h1>AI Operations Dashboard</h1>
+        <p class="lede">Monitor live health, sales momentum, and activity from one focused view.</p>
+      </div>
+
+      <div class="sidebar-card">
+        <span>Refresh cadence</span>
+        <strong>Every 10 seconds</strong>
+      </div>
+
+      <div class="sidebar-card">
+        <span>Priority focus</span>
+        <strong>Conversion recovery</strong>
+      </div>
+    </aside>
+
+    <main class="dashboard">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Live Summary</p>
+          <h2>Performance snapshot</h2>
+        </div>
+        <button id="refreshButton" class="refresh-button">Refresh data</button>
+      </header>
+
+      <section id="statsGrid" class="stats-grid"></section>
+
+      <section class="panel chart-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Trendline</p>
+            <h3>Revenue vs orders</h3>
+          </div>
+          <p id="updatedAt" class="timestamp">Updating...</p>
+        </div>
+        <div id="chart" class="chart"></div>
+        <div id="chartLegend" class="chart-legend"></div>
+      </section>
+
+      <section class="panel bottom-grid">
+        <div>
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Channels</p>
+              <h3>Traffic mix</h3>
+            </div>
+          </div>
+          <div id="segments" class="segments"></div>
+        </div>
+
+        <div>
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Activity</p>
+              <h3>Recent updates</h3>
+            </div>
+          </div>
+          <div id="activityList" class="activity-list"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
