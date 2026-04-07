@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Workforce Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">HCL Python Hackathon Presentation</p>
+                <h1>Smart Workforce Analytics &amp; Management System</h1>
+                <p class="hero-copy">A simple Flask dashboard for workforce records, analytics, and live management actions.</p>
+            </div>
+            <div class="hero-highlight">
+                <span>Top Performer</span>
+                <strong>{{ metrics.top_employee.name }}</strong>
+                <p>{{ metrics.top_employee.department }} | {{ metrics.top_employee.role }}</p>
+                <p>Performance {{ metrics.top_employee.performance_score }} / 5</p>
+            </div>
+        </header>
+
+        <section class="metrics-grid">
+            <article class="metric-card accent"><span>Total Employees</span><strong>{{ metrics.employee_count }}</strong></article>
+            <article class="metric-card"><span>Average Salary</span><strong>{{ metrics.average_salary | currency }}</strong></article>
+            <article class="metric-card"><span>Median Salary</span><strong>{{ metrics.median_salary | currency }}</strong></article>
+            <article class="metric-card"><span>Average Attendance</span><strong>{{ "%.1f"|format(metrics.avg_attendance) }}%</strong></article>
+        </section>
+
+        <section class="content-grid">
+            <section class="panel">
+                <div class="panel-heading">
+                    <h2>Add Employee</h2>
+                    <p>Use this during the presentation to show a live CRUD action.</p>
+                </div>
+                <form class="employee-form" method="post" action="{{ url_for('add_employee') }}">
+                    <input name="name" placeholder="Employee name" required>
+                    <input name="department" placeholder="Department" required>
+                    <input name="role" placeholder="Role" required>
+                    <input name="salary" type="number" step="0.01" placeholder="Salary" required>
+                    <input name="experience_years" type="number" step="0.1" placeholder="Experience" required>
+                    <input name="performance_score" type="number" step="0.1" min="0" max="5" placeholder="Performance score" required>
+                    <input name="attendance_rate" type="number" step="0.1" min="0" max="100" placeholder="Attendance %" required>
+                    <button type="submit">Add To Workforce</button>
+                </form>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <h2>Department Salary Analysis</h2>
+                    <p>Grouped with Pandas for department-level insights.</p>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Department</th><th>Avg Salary</th><th>Min</th><th>Max</th><th>Count</th></tr></thead>
+                        <tbody>
+                            {% for row in department_summary %}
+                            <tr>
+                                <td>{{ row.department }}</td>
+                                <td>{{ row.average_salary | currency }}</td>
+                                <td>{{ row.minimum_salary | currency }}</td>
+                                <td>{{ row.maximum_salary | currency }}</td>
+                                <td>{{ row.employee_count }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </section>
+
+        <section class="panel">
+            <div class="panel-heading">
+                <h2>Generated Visualizations</h2>
+                <p>Charts are refreshed from the latest workforce data.</p>
+            </div>
+            <div class="charts-grid">
+                {% for chart_name in chart_names %}
+                <figure class="chart-card">
+                    <img src="{{ url_for('chart_file', filename=chart_name) }}" alt="{{ chart_name }}">
+                    <figcaption>{{ chart_name.replace('_', ' ').replace('.png', '').title() }}</figcaption>
+                </figure>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="content-grid lower-grid">
+            <section class="panel">
+                <div class="panel-heading">
+                    <h2>Top Performers</h2>
+                    <p>Filtered and sorted using Pandas.</p>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Name</th><th>Department</th><th>Salary</th><th>Performance</th></tr></thead>
+                        <tbody>
+                            {% for employee in top_performers %}
+                            <tr>
+                                <td>{{ employee.name }}</td>
+                                <td>{{ employee.department }}</td>
+                                <td>{{ employee.salary | currency }}</td>
+                                <td>{{ employee.performance_score }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <h2>NumPy Highlights</h2>
+                    <p>Compact statistics for demo and review.</p>
+                </div>
+                <div class="stats-list">
+                    <div><span>Mean Salary</span><strong>{{ numpy_summary.mean_salary | currency }}</strong></div>
+                    <div><span>Median Salary</span><strong>{{ numpy_summary.median_salary | currency }}</strong></div>
+                    <div><span>Salary Std. Dev.</span><strong>{{ numpy_summary.salary_std_dev | round(2) }}</strong></div>
+                    <div><span>Correlation Matrix</span><strong>{{ numpy_summary.correlation_matrix }}</strong></div>
+                </div>
+            </section>
+        </section>
+
+        <section class="panel">
+            <div class="panel-heading">
+                <h2>Employee Management Table</h2>
+                <p>Update salary or remove an employee to demonstrate management operations.</p>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>ID</th><th>Name</th><th>Department</th><th>Role</th><th>Salary</th><th>Experience</th><th>Performance</th><th>Attendance</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        {% for employee in employees %}
+                        <tr>
+                            <td>{{ employee.id }}</td>
+                            <td>{{ employee.name }}</td>
+                            <td>{{ employee.department }}</td>
+                            <td>{{ employee.role }}</td>
+                            <td>{{ employee.salary | currency }}</td>
+                            <td>{{ employee.experience_years }}</td>
+                            <td>{{ employee.performance_score }}</td>
+                            <td>{{ employee.attendance_rate }}%</td>
+                            <td>
+                                <div class="action-stack">
+                                    <form method="post" action="{{ url_for('update_salary', employee_id=employee.id) }}">
+                                        <input name="salary" type="number" step="0.01" value="{{ employee.salary }}" required>
+                                        <button type="submit">Update</button>
+                                    </form>
+                                    <form method="post" action="{{ url_for('delete_employee', employee_id=employee.id) }}">
+                                        <button class="danger" type="submit">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

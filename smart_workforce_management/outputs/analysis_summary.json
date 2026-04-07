@@ -1,0 +1,231 @@
+{
+  "department_salary_analysis": [
+    {
+      "index": 0,
+      "department": "Engineering",
+      "average_salary": 92000.0,
+      "minimum_salary": 86000.0,
+      "maximum_salary": 98000.0,
+      "employee_count": 3
+    },
+    {
+      "index": 1,
+      "department": "Finance",
+      "average_salary": 75000.0,
+      "minimum_salary": 69000.0,
+      "maximum_salary": 81000.0,
+      "employee_count": 2
+    },
+    {
+      "index": 2,
+      "department": "Human Resources",
+      "average_salary": 63000.0,
+      "minimum_salary": 54000.0,
+      "maximum_salary": 72000.0,
+      "employee_count": 2
+    },
+    {
+      "index": 3,
+      "department": "Marketing",
+      "average_salary": 68500.0,
+      "minimum_salary": 61000.0,
+      "maximum_salary": 76000.0,
+      "employee_count": 2
+    },
+    {
+      "index": 4,
+      "department": "Operations",
+      "average_salary": 74000.0,
+      "minimum_salary": 70000.0,
+      "maximum_salary": 78000.0,
+      "employee_count": 2
+    },
+    {
+      "index": 5,
+      "department": "Sales",
+      "average_salary": 78500.0,
+      "minimum_salary": 64000.0,
+      "maximum_salary": 93000.0,
+      "employee_count": 2
+    },
+    {
+      "index": 6,
+      "department": "Support",
+      "average_salary": 60500.0,
+      "minimum_salary": 56000.0,
+      "maximum_salary": 65000.0,
+      "employee_count": 2
+    }
+  ],
+  "top_performers": [
+    {
+      "id": 2,
+      "name": "Priya Nair",
+      "department": "Engineering",
+      "role": "Data Engineer",
+      "salary": 98000.0,
+      "experience_years": 6.0,
+      "performance_score": 4.7,
+      "attendance_rate": 94.5
+    },
+    {
+      "id": 1,
+      "name": "Aarav Mehta",
+      "department": "Engineering",
+      "role": "Backend Developer",
+      "salary": 92000.0,
+      "experience_years": 5.0,
+      "performance_score": 4.5,
+      "attendance_rate": 96.2
+    },
+    {
+      "id": 3,
+      "name": "Rohan Das",
+      "department": "Engineering",
+      "role": "QA Lead",
+      "salary": 86000.0,
+      "experience_years": 7.0,
+      "performance_score": 4.1,
+      "attendance_rate": 91.3
+    },
+    {
+      "id": 6,
+      "name": "Sara Ali",
+      "department": "Finance",
+      "role": "Financial Analyst",
+      "salary": 81000.0,
+      "experience_years": 5.0,
+      "performance_score": 4.3,
+      "attendance_rate": 95.2
+    },
+    {
+      "id": 7,
+      "name": "Vikram Jain",
+      "department": "Finance",
+      "role": "Accountant",
+      "salary": 69000.0,
+      "experience_years": 4.0,
+      "performance_score": 4.0,
+      "attendance_rate": 92.8
+    },
+    {
+      "id": 4,
+      "name": "Neha Kapoor",
+      "department": "Human Resources",
+      "role": "HR Manager",
+      "salary": 72000.0,
+      "experience_years": 8.0,
+      "performance_score": 4.4,
+      "attendance_rate": 97.0
+    },
+    {
+      "id": 13,
+      "name": "Kabir Verma",
+      "department": "Marketing",
+      "role": "Brand Strategist",
+      "salary": 76000.0,
+      "experience_years": 6.0,
+      "performance_score": 4.4,
+      "attendance_rate": 92.1
+    },
+    {
+      "id": 12,
+      "name": "Ananya Bose",
+      "department": "Marketing",
+      "role": "SEO Specialist",
+      "salary": 61000.0,
+      "experience_years": 3.0,
+      "performance_score": 4.0,
+      "attendance_rate": 96.5
+    },
+    {
+      "id": 11,
+      "name": "Dev Patel",
+      "department": "Operations",
+      "role": "Process Lead",
+      "salary": 78000.0,
+      "experience_years": 6.0,
+      "performance_score": 4.1,
+      "attendance_rate": 95.8
+    },
+    {
+      "id": 10,
+      "name": "Pooja Sharma",
+      "department": "Operations",
+      "role": "Operations Analyst",
+      "salary": 70000.0,
+      "experience_years": 4.0,
+      "performance_score": 4.2,
+      "attendance_rate": 94.0
+    },
+    {
+      "id": 9,
+      "name": "Manav Gupta",
+      "department": "Sales",
+      "role": "Regional Manager",
+      "salary": 93000.0,
+      "experience_years": 9.0,
+      "performance_score": 4.8,
+      "attendance_rate": 90.4
+    },
+    {
+      "id": 8,
+      "name": "Ishita Roy",
+      "department": "Sales",
+      "role": "Sales Executive",
+      "salary": 64000.0,
+      "experience_years": 3.0,
+      "performance_score": 4.6,
+      "attendance_rate": 89.6
+    },
+    {
+      "id": 14,
+      "name": "Meera Iyer",
+      "department": "Support",
+      "role": "Customer Success Lead",
+      "salary": 65000.0,
+      "experience_years": 5.0,
+      "performance_score": 4.2,
+      "attendance_rate": 97.4
+    }
+  ],
+  "numpy_statistics": {
+    "mean_salary": 74333.33333333333,
+    "median_salary": 72000.0,
+    "salary_std_dev": 13143.650769689353,
+    "normalized_salary": [
+      0.864,
+      1.0,
+      0.727,
+      0.409,
+      0.0,
+      0.614,
+      0.341,
+      0.227,
+      0.886,
+      0.364,
+      0.545,
+      0.159,
+      0.5,
+      0.25,
+      0.045
+    ],
+    "correlation_matrix": [
+      [
+        1.0,
+        0.714,
+        -0.071
+      ],
+      [
+        0.714,
+        1.0,
+        -0.241
+      ],
+      [
+        -0.071,
+        -0.241,
+        1.0
+      ]
+    ]
+  }
+}

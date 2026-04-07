@@ -1,0 +1,5 @@
+flask>=3.1.3
+matplotlib
+numpy
+pandas
+python-pptx>=1.0.2
