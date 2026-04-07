@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventHive | Online Event Booking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header class="hero">
+        <nav class="topbar">
+            <div class="brand">EventHive</div>
+            <a href="#booking-section" class="nav-link">Book Tickets</a>
+        </nav>
+
+        <div class="hero-content">
+            <div>
+                <p class="eyebrow">Plan. Book. Attend.</p>
+                <h1>Discover events and reserve your seats in minutes.</h1>
+                <p class="hero-text">
+                    Browse workshops, concerts, and networking sessions from one simple booking dashboard.
+                </p>
+                <div class="hero-actions">
+                    <a href="#events-section" class="primary-btn">Explore Events</a>
+                    <a href="#recent-bookings" class="secondary-btn">View Bookings</a>
+                </div>
+            </div>
+
+            <div class="hero-card">
+                <p>Live inventory</p>
+                <h2 id="eventCount">0 events</h2>
+                <span>Seats update instantly after each booking.</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="layout">
+        <section id="events-section">
+            <div class="section-heading">
+                <p class="eyebrow">Upcoming Events</p>
+                <h2>Choose an experience</h2>
+            </div>
+            <div id="eventsGrid" class="events-grid"></div>
+        </section>
+
+        <section id="booking-section" class="booking-panel">
+            <div class="section-heading">
+                <p class="eyebrow">Booking Form</p>
+                <h2>Reserve your tickets</h2>
+            </div>
+
+            <form id="bookingForm" class="booking-form">
+                <label>
+                    Select Event
+                    <select id="eventSelect" required></select>
+                </label>
+                <label>
+                    Full Name
+                    <input type="text" id="customerName" placeholder="Enter your name" required>
+                </label>
+                <label>
+                    Email Address
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </label>
+                <label>
+                    Number of Tickets
+                    <input type="number" id="tickets" min="1" value="1" required>
+                </label>
+                <button type="submit" class="primary-btn full-width">Confirm Booking</button>
+                <p id="formMessage" class="form-message"></p>
+            </form>
+        </section>
+
+        <section id="recent-bookings">
+            <div class="section-heading">
+                <p class="eyebrow">Recent Activity</p>
+                <h2>Latest bookings</h2>
+            </div>
+            <div id="bookingsList" class="booking-list"></div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
